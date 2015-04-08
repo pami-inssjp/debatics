@@ -1,0 +1,21 @@
+FROM node:0.10
+
+ENV NODE_ENV production
+ENV NODE_PATH .
+ENV PORT 9001
+ENV MONGO_URL mongodb://mongo:27017/debatics
+ENV ACCESS_TOKEN %NOTIFICATIONS_TOKEN%
+ENV MANDRILL_TOKEN %MANDRILL_TOKEN%
+ENV MANDRILL_FROM_EMAIL no-reply@debatics.pami.org.ar
+ENV MANDRILL_FROM_NAME Debatics
+ENV LOCALE es
+ENV http_proxy %HTTP_PROXY%
+ENV https_proxy %HTTP_PROXY%
+
+RUN mkdir /app
+WORKDIR /app
+ADD ./app /app
+
+CMD make
+
+EXPOSE 9001

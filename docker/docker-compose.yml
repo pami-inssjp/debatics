@@ -1,0 +1,44 @@
+mongodata:
+  image: busybox
+  volumes:
+    - /data/db
+
+mongo:
+  image: mongo
+  volumes_from:
+    - mongodata
+
+dos:
+  image: democracyos/app:0.14.0-deis
+  ports:
+    - "80:80"
+  links:
+    - mongo
+    - notifier
+  environment:
+    - NODE_PATH=.
+    - PORT=80
+    - PROTOCOL=http
+    - PUBLIC_PORT=80
+    - STAFF=itpami@pami.org.ar
+    - MONGO_URL=mongodb://mongo:27017/debatics
+    - HOST=debatics.pami.org.ar
+    - NODE_ENV=production
+    - ORGANIZATION_NAME=IT Pami
+    - ORGANIZATION_URL=https://it.pami.org.ar
+    - LOCALE=es
+    - FAVICON=https://it.pami.org.ar/profiles/dkan/themes/contrib/nuboot/favicon.ico
+    - LOGO=/lib/boot/images/logo_debatics.png
+    - NOTIFICATIONS_URL=http://notifier:9001/api/events
+    - NOTIFICATIONS_TOKEN=%NOTIFICATIONS_TOKEN%
+    - DEBUG=democracyos*
+    - JWT_SECRET=%JWT_SECRET%
+
+notifier:
+  build: ./notifier
+  ports:
+    - "9001:9001"
+  links:
+    - mongo
+  volumes:
+    - ./notifier/app /app
