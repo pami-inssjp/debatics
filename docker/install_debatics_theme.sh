@@ -5,5 +5,5 @@ fi
 
 docker exec -t debatics_dos_1 git config --system http.proxy $http_proxy
 docker exec -t debatics_dos_1 git config --system https.proxy $http_proxy
-docker exec -t debatics_dos_1 git clone https://github.com/pami-inssjp/debatics.git
-docker exec -t debatics_dos_1 cp -frv debatics/debatics-theme/app/public .
+docker exec -t debatics_dos_1 git clone https://github.com/pami-inssjp/dos-debatics.git
+docker exec -t debatics_dos_1 cp -frv dos-debatics/debatics-theme/app/public .
